@@ -22,7 +22,7 @@ function App() {
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
     verified: { value: null, matchMode: FilterMatchMode.EQUALS }
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [representatives] = useState([
     { name: 'Amy Elsner', image: 'amyelsner.png' },
@@ -60,10 +60,11 @@ function App() {
   useEffect(() => {
     CustomerService.getCustomers().then((data: any) => {
       setCustomers(getCustomers(data));
+      setLoading(false);
     });
   }, []);
 
-  const getCustomers = (data: any) => {
+  const getCustomers = (data: any): any => {
     return [...(data || [])].map((d) => {
       d.date = new Date(d.date);
 
